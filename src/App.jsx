@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Search, Heart, ChefHat, Youtube, X, Utensils, ArrowRight, 
   Phone, Linkedin, Copyright as CopyrightIcon, Share2, Play, 
   Timer as TimerIcon, MessageSquare, ChevronLeft, ChevronRight, Zap,
-  Flame, Leaf, Droplet, Dice5
+  Flame, Leaf, Droplet
 } from 'lucide-react';
 
 // --- Constants ---
@@ -28,10 +27,10 @@ const RecipeSkeleton = () => (
 
 // 2. Nutrition Card
 const NutritionCard = ({ icon: Icon, label, value, color }) => (
-  <div className={`flex flex-col items-center p-3 rounded-xl border ${color} bg-white shadow-sm`}>
-    <Icon className={`w-5 h-5 mb-1 ${color.replace('border', 'text').replace('200', '500')}`} />
-    <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">{label}</span>
-    <span className="text-lg font-bold text-slate-900">{value}</span>
+  <div className={`flex flex-col items-center p-2 sm:p-3 rounded-xl border ${color} bg-white shadow-sm transition-transform hover:scale-105`}>
+    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 mb-1 ${color.replace('border', 'text').replace('200', '500')}`} />
+    <span className="text-[10px] sm:text-xs text-slate-500 font-medium uppercase tracking-wider">{label}</span>
+    <span className="text-sm sm:text-lg font-bold text-slate-900">{value}</span>
   </div>
 );
 
@@ -81,11 +80,11 @@ const AiAssistant = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-24 right-4 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 fade-in h-[500px] max-h-[80vh]">
+    <div className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-6 z-50 w-auto sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 fade-in h-[450px] sm:h-[500px] max-h-[60vh] sm:max-h-[80vh]">
       <div className="bg-orange-500 p-4 flex justify-between items-center text-white shrink-0">
         <div className="flex items-center gap-2">
           <div className="bg-white/20 p-1.5 rounded-lg"><MessageSquare className="w-4 h-4" /></div>
-          <span className="font-bold">Chef Bot</span>
+          <span className="font-bold text-sm sm:text-base">Chef Bot</span>
         </div>
         <button onClick={onClose}><X className="w-5 h-5 opacity-80 hover:opacity-100" /></button>
       </div>
@@ -145,43 +144,43 @@ const CookMode = ({ recipe, onClose, steps }) => {
 
   return (
     <div className="fixed inset-0 z-[60] bg-slate-900 text-white flex flex-col animate-in fade-in duration-300">
-      <div className="flex items-center justify-between p-6 shrink-0">
+      <div className="flex items-center justify-between p-4 sm:p-6 shrink-0">
         <div>
-          <h2 className="text-xl font-bold text-orange-400">Cook Mode</h2>
-          <p className="text-slate-400 text-sm line-clamp-1">{recipe.strMeal}</p>
+          <h2 className="text-lg sm:text-xl font-bold text-orange-400">Cook Mode</h2>
+          <p className="text-slate-400 text-xs sm:text-sm line-clamp-1">{recipe.strMeal}</p>
         </div>
         <button onClick={onClose} className="p-2 bg-slate-800 rounded-full hover:bg-slate-700 transition-colors">
           <X className="w-6 h-6" />
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col justify-center items-center px-6 text-center max-w-3xl mx-auto overflow-y-auto">
+      <div className="flex-1 flex flex-col justify-center items-center px-4 sm:px-6 text-center max-w-3xl mx-auto overflow-y-auto w-full">
         {steps.length > 0 ? (
           <>
-            <span className="text-orange-500 font-bold tracking-widest uppercase text-sm mb-4">
+            <span className="text-orange-500 font-bold tracking-widest uppercase text-xs sm:text-sm mb-4">
               Step {currentStep + 1} of {steps.length}
             </span>
-            <p className="text-2xl md:text-2xl font-medium  md:leading-small">
+            <p className="text-xl sm:text-2xl md:text-4xl font-medium leading-relaxed md:leading-normal">
               {steps[currentStep]}
             </p>
           </>
         ) : (
-          <p className="text-xl text-slate-400">No step-by-step instructions available for this recipe.</p>
+          <p className="text-lg sm:text-xl text-slate-400">No step-by-step instructions available for this recipe.</p>
         )}
         
-        <div className="mt-10 flex gap-4">
+        <div className="mt-8 sm:mt-10 flex gap-4">
           {timeLeft > 0 ? (
             <div className="flex items-center gap-3 bg-orange-500/20 text-orange-400 px-6 py-3 rounded-full border border-orange-500/50">
               <TimerIcon className="w-6 h-6 animate-pulse" />
-              <span className="text-2xl font-mono font-bold">{formatTime(timeLeft)}</span>
+              <span className="text-xl sm:text-2xl font-mono font-bold">{formatTime(timeLeft)}</span>
               <button onClick={() => setTimeLeft(0)} className="ml-2 hover:text-white"><X className="w-4 h-4"/></button>
             </div>
           ) : (
             <div className="flex gap-2 flex-wrap justify-center">
-              <button onClick={() => startTimer(5)} className="flex items-center gap-2 px-4 py-2 bg-slate-800 rounded-full hover:bg-slate-700 transition">
+              <button onClick={() => startTimer(5)} className="flex items-center gap-2 px-4 py-2 bg-slate-800 rounded-full hover:bg-slate-700 transition text-sm sm:text-base">
                 <TimerIcon className="w-4 h-4" /> 5m
               </button>
-              <button onClick={() => startTimer(10)} className="flex items-center gap-2 px-4 py-2 bg-slate-800 rounded-full hover:bg-slate-700 transition">
+              <button onClick={() => startTimer(10)} className="flex items-center gap-2 px-4 py-2 bg-slate-800 rounded-full hover:bg-slate-700 transition text-sm sm:text-base">
                 <TimerIcon className="w-4 h-4" /> 10m
               </button>
             </div>
@@ -190,13 +189,13 @@ const CookMode = ({ recipe, onClose, steps }) => {
       </div>
 
       {steps.length > 0 && (
-        <div className="p-6 pb-10 flex justify-between items-center max-w-5xl mx-auto w-full shrink-0">
+        <div className="p-4 sm:p-6 pb-8 sm:pb-10 flex justify-between items-center max-w-5xl mx-auto w-full shrink-0">
           <button 
             onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
             disabled={currentStep === 0}
-            className="flex items-center gap-2 px-6 py-4 rounded-full bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-700 transition text-lg font-medium"
+            className="flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-full bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-700 transition text-base sm:text-lg font-medium"
           >
-            <ChevronLeft className="w-6 h-6" /> Prev
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" /> Prev
           </button>
           <div className="flex gap-1.5 hidden sm:flex">
             {steps.map((_, idx) => (
@@ -206,9 +205,9 @@ const CookMode = ({ recipe, onClose, steps }) => {
           <button 
             onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}
             disabled={currentStep === steps.length - 1}
-            className="flex items-center gap-2 px-6 py-4 rounded-full bg-orange-600 disabled:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-500 transition text-lg font-bold"
+            className="flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-full bg-orange-600 disabled:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-500 transition text-base sm:text-lg font-bold"
           >
-            Next <ChevronRight className="w-6 h-6" />
+            Next <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
       )}
@@ -258,45 +257,45 @@ const RecipeModal = ({ recipe, onClose, onFavorite, isFavorite, onShare, onStart
   const DifficultyIcon = difficulty === 'Easy' ? Zap : (difficulty === 'Medium' ? ChefHat : Flame);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-hidden">
       <div 
         className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       ></div>
       
-      <div className="relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300 max-h-[90vh]">
+      <div className="relative bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300 max-h-[95vh] sm:max-h-[90vh]">
         {/* Header Image */}
-        <div className="relative h-56 sm:h-72 shrink-0 group">
+        <div className="relative h-48 sm:h-72 shrink-0 group">
           <img src={recipe.strMealThumb} alt={recipe.strMeal} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-white transition-all">
+          <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-white transition-all z-10">
             <X className="w-6 h-6" />
           </button>
 
-          <div className="absolute bottom-0 left-0 p-6 w-full">
+          <div className="absolute bottom-0 left-0 p-4 sm:p-6 w-full">
             <div className="flex justify-between items-end">
-              <div>
-                <div className="flex gap-2 mb-3">
-                  <span className="inline-block px-2 py-1 bg-orange-500 text-white text-xs font-bold rounded-md shadow-sm">
+              <div className="max-w-[70%]">
+                <div className="flex gap-2 mb-2 sm:mb-3 flex-wrap">
+                  <span className="inline-block px-2 py-1 bg-orange-500 text-white text-[10px] sm:text-xs font-bold rounded-md shadow-sm">
                     {recipe.strCategory}
                   </span>
-                  <span className={`inline-flex items-center gap-1 px-2 py-1 ${difficultyColor} text-xs font-bold rounded-md shadow-sm`}>
+                  <span className={`inline-flex items-center gap-1 px-2 py-1 ${difficultyColor} text-[10px] sm:text-xs font-bold rounded-md shadow-sm`}>
                     <DifficultyIcon className="w-3 h-3" /> {difficulty}
                   </span>
                 </div>
-                <h2 className="text-2xl sm:text-4xl font-bold text-white leading-tight mb-2">{recipe.strMeal}</h2>
-                <div className="flex items-center gap-4 text-slate-200 text-sm">
-                  <span className="flex items-center gap-1"><Utensils className="w-4 h-4"/> {recipe.strArea}</span>
+                <h2 className="text-lg sm:text-4xl font-bold text-white leading-tight mb-2 line-clamp-2">{recipe.strMeal}</h2>
+                <div className="flex items-center gap-4 text-slate-200 text-xs sm:text-sm">
+                  <span className="flex items-center gap-1"><Utensils className="w-3 h-3 sm:w-4 sm:h-4"/> {recipe.strArea}</span>
                   <span className="hidden sm:flex items-center gap-1"><TimerIcon className="w-4 h-4"/> ~30 mins</span>
                 </div>
               </div>
 
-              <div className="flex gap-3">
-                <button onClick={() => onShare(recipe)} className="p-3 bg-white/20 backdrop-blur rounded-full text-white hover:bg-white hover:text-slate-900 transition-all">
-                  <Share2 className="w-5 h-5" />
+              <div className="flex gap-2 sm:gap-3">
+                <button onClick={() => onShare(recipe)} className="p-2 sm:p-3 bg-white/20 backdrop-blur rounded-full text-white hover:bg-white hover:text-slate-900 transition-all">
+                  <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
-                <button onClick={() => onFavorite(recipe)} className="p-3 bg-white rounded-full shadow-lg hover:scale-110 active:scale-95 transition-transform">
-                  <Heart className={`w-6 h-6 ${isFavorite ? 'fill-red-500 text-red-500 animate-[pulse_0.5s_ease-in-out]' : 'text-slate-400'}`} />
+                <button onClick={() => onFavorite(recipe)} className="p-2 sm:p-3 bg-white rounded-full shadow-lg hover:scale-110 active:scale-95 transition-transform">
+                  <Heart className={`w-4 h-4 sm:w-6 sm:h-6 ${isFavorite ? 'fill-red-500 text-red-500 animate-[pulse_0.5s_ease-in-out]' : 'text-slate-400'}`} />
                 </button>
               </div>
             </div>
@@ -304,14 +303,15 @@ const RecipeModal = ({ recipe, onClose, onFavorite, isFavorite, onShare, onStart
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6 sm:p-8 bg-white">
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-             <button onClick={onStartCook} className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-xl font-bold shadow-lg shadow-orange-500/30 hover:shadow-xl hover:scale-[1.02] transition-all">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-white">
+          <div className="flex flex-col sm:flex-row gap-4 mb-6 sm:mb-8">
+             <button onClick={onStartCook} className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-xl font-bold shadow-lg shadow-orange-500/30 hover:shadow-xl hover:scale-[1.02] transition-all text-sm sm:text-base">
               <Play className="w-5 h-5 fill-current" /> Start Cook Mode
             </button>
           </div>
 
-          <div className="grid grid-cols-4 gap-2 sm:gap-4 mb-8">
+          {/* Nutrition Grid - Adjusted for Mobile */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <NutritionCard icon={Flame} label="Calories" value={nut.calories} color="border-orange-200 text-orange-500" />
             <NutritionCard icon={Zap} label="Protein" value={nut.protein} color="border-blue-200 text-blue-500" />
             <NutritionCard icon={Leaf} label="Carbs" value={nut.carbs} color="border-green-200 text-green-500" />
@@ -341,7 +341,7 @@ const RecipeModal = ({ recipe, onClose, onFavorite, isFavorite, onShare, onStart
                 <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
                   <div className="w-1 h-6 bg-orange-500 rounded-full"></div> Instructions
                 </h3>
-                <div className="space-y-4 text-slate-600 leading-relaxed">
+                <div className="space-y-4 text-slate-600 leading-relaxed text-sm sm:text-base">
                   {instructions.map((step, idx) => (
                     <div key={idx} className="flex gap-4">
                       <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 font-bold rounded-full text-sm">{idx + 1}</span>
@@ -464,16 +464,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-orange-100 flex flex-col overflow-y-scroll">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-orange-100 flex flex-col w-full max-w-[100vw] overflow-x-hidden">
       {/* Navigation Bar */}
       <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div onClick={() => {setView('home'); fetchRecipes(); setSelectedCategory(null);}} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition">
-              <div className="bg-orange-500 p-2 rounded-xl shadow-lg shadow-orange-500/20">
-                <ChefHat className="w-6 h-6 text-white" />
+              <div className="bg-orange-500 p-1.5 sm:p-2 rounded-xl shadow-lg shadow-orange-500/20">
+                <ChefHat className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-slate-900">Crave<span className="text-orange-500">.</span><span className='text-orange-500 text-xs'> BY ASAD JN</span> </span>
+              <span className="text-lg sm:text-xl font-bold tracking-tight text-slate-900">Crave<span className="text-orange-500">.</span> <span className='text-slate-200'>ASAD JN</span></span>
             </div>
 
             <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-lg mx-8 relative group">
@@ -487,10 +487,16 @@ export default function App() {
               <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-400 group-focus-within:text-orange-500 transition-colors" />
             </form>
 
-            <button onClick={() => setView('favorites')} className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all text-black-500 border border-slate-200 bg-transparent hover:bg-transparent hover:text-orange-500 hover:border-orange-500 ${view === 'favorites' ? 'bg-orange-50 text-orange-600 font-medium border-orange-100' : ''}`}>
-              <Heart className={`w-5 h-5 ${view === 'favorites' ? 'fill-white-500 text-orange-500' : ''}`} />
-              <span className="hidden sm:inline">Favorites ({favorites.length})</span>
-            </button>
+            <div className="flex items-center gap-2">
+              {/* Favorites Button */}
+              <button 
+                onClick={() => setView('favorites')}
+                className={`flex items-center gap-2 px-2 sm:px-4 py-2 rounded-full transition-all text-slate-500 bg-transparent border border-slate-200 hover:bg-slate-100 hover:text-black hover:border-slate-200 ${view === 'favorites' ? 'bg-orange-50 text-orange-600 font-medium border-orange-100' : ''}`}
+              >
+                <Heart className={`w-5 h-5 ${view === 'favorites' ? 'fill-orange-500 text-orange-500' : ''}`} />
+                <span className="hidden sm:inline">Favorites ({favorites.length})</span>
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -528,16 +534,16 @@ export default function App() {
 
         <div className="mb-6 flex justify-between items-end">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
               {view === 'favorites' ? 'Your Cookbook' : (selectedCategory ? `${selectedCategory} Recipes` : (query ? `Results for "${query}"` : 'Discover & Cook'))}
             </h1>
-            <p className="text-slate-500 mt-1">
+            <p className="text-sm sm:text-base text-slate-500 mt-1">
               {view === 'favorites' ? 'All your saved recipes in one place.' : 'Explore delicious recipes from around the world.'}
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
           {loading ? (
             [...Array(8)].map((_, i) => <RecipeSkeleton key={i} />)
           ) : (view === 'favorites' ? favorites : recipes).length > 0 ? (
@@ -581,19 +587,19 @@ export default function App() {
         </div>
       </main>
 
-      <button onClick={() => setAiOpen(!aiOpen)} className="fixed bottom-6 right-6 z-40 p-4 bg-orange-500 text-white rounded-full shadow-xl hover:bg-orange-600 hover:scale-105 transition-all">
-        {aiOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
+      <button onClick={() => setAiOpen(!aiOpen)} className="fixed bottom-6 right-6 z-40 p-3 sm:p-4 bg-orange-500 text-white rounded-full shadow-xl hover:bg-orange-600 hover:scale-105 transition-all">
+        {aiOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />}
       </button>
 
       <AiAssistant isOpen={aiOpen} onClose={() => setAiOpen(false)} />
 
       <footer className="bg-white border-t border-slate-200 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-            <div className="flex items-center gap-1"><CopyrightIcon className="w-4 h-4" /> <span>{new Date().getFullYear()} asadjn99. All rights reserved.</span></div>
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
-              <a href="tel:+923075993029" className="flex items-center gap-2 hover:text-orange-500 transition-colors"><Phone className="w-4 h-4" /> <span>Help Contact: +92 307 5993029</span></a>
-              <a href="https://linkedin.com/in/asad-jn99" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-orange-500 transition-colors"><Linkedin className="w-4 h-4" /> <span>linkedin.com/in/asad-jn99</span></a>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs sm:text-sm text-slate-500">
+            <div className="flex items-center gap-1"><CopyrightIcon className="w-3 h-3 sm:w-4 sm:h-4" /> <span>{new Date().getFullYear()} asadjn99. All rights reserved.</span></div>
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-8 w-full md:w-auto">
+              <a href="tel:+923075993029" className="flex items-center gap-2 hover:text-orange-500 transition-colors break-all"><Phone className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" /> <span>Help Contact: +92 307 5993029</span></a>
+              <a href="https://linkedin.com/in/asad-jn99" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-orange-500 transition-colors break-all"><Linkedin className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" /> <span>linkedin.com/in/asad-jn99</span></a>
             </div>
           </div>
         </div>
